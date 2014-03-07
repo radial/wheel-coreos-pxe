@@ -1,0 +1,10 @@
+default coreos
+prompt 1
+timeout 15
+
+display boot.msg
+
+label coreos
+    menu default
+    kernel coreos_production_pxe.vmlinuz
+    append initrd=coreos_production_pxe_image.cpio.gz root=squashfs: state=tmpfs: sshkey="YOUR-SSH-PUBLIC-KEY-HERE"
