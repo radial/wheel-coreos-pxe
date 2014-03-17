@@ -12,8 +12,9 @@ MAINTAINER  Brian Clements <brian@brianclements.net>
 # Western Europe (Dublin, Ireland):     eu-west-1.ec2.archive
 # SouthEast Asia (Singapore):           ap-southeast-1.ec2.archive
 # NorthEast Asia (Tokyo):               ap-northeast-1.ec2.archive
-# ... and replace MIRROR below with your selection
-RUN         sed 's@archive@us-west-1.ec2.archive@' -i /etc/apt/sources.list
+# ... and assign MIRROR below with your selection
+ENV MIRROR  us-west-1.ec2.archive
+RUN         sed "s@archive@$MIRROR@" -i /etc/apt/sources.list
 
 # Install packages
 RUN         apt-get -q update
