@@ -4,7 +4,7 @@
 ##Description:  resume coreos-pxe boot container after host restart
 ##Date:         
 ##Version:      1.0
-##Requirements: wget, docker, pipework
+##Requirements: docker, pipework
 ##----------------
 
 ## docker restarts all containers that were previously running

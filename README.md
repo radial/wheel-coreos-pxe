@@ -12,7 +12,7 @@ Dockerfile and configuration for running dnsmasq as PXE+DHCP server serving Core
     * Note: I configured my bridge `br0` to "take over" the ip address my `eth0`
       once had and gave the docker container a new IP different from my bridge
       ip. To the network, the container will appear like a completely different
-      computer on the LAN.
+      computer on the LAN while my host keeps it's original ip address.
 * Fire it up with `./run.sh`
 
 ## License
