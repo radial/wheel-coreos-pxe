@@ -1,0 +1,10 @@
+default coreos
+prompt 1
+timeout 15
+
+display boot.msg
+
+label coreos
+    menu default
+    kernel coreos_production_pxe.vmlinuz
+    append initrd=coreos_production_pxe_image.cpio.gz rootfstype=btrfs vga=0x318 coreos.autologin sshkey="YOUR_SSH_PUBLIC_KEY_HERE"
