@@ -105,10 +105,11 @@ To run dynamically:
 3. `fig -f fig-dynamic.yml up`
 
 ## License
+
 MIT
 
 ## Credits
-Much thanks to [Jérôme Petazzoni](https://github.com/jpetazzo) for his help with
-[pipework](https://github.com/jpetazzo/pipework), and for
-[PXE](https://github.com/jpetazzo/pxe) which this container is mainly based off
+
+Much thanks to [Jérôme Petazzoni](https://github.com/jpetazzo) for
+[PXE](https://github.com/jpetazzo/pxe), which this container is mainly based off
 of. 
