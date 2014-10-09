@@ -23,6 +23,19 @@ use appropriately.
 [coreos]: https://coreos.com/
 [pxedocs]: https://coreos.com/docs/running-coreos/bare-metal/booting-with-pxe/
 
+## Tunables
+
+Tunable environment variables; modify at runtime.
+
+**REFRESH_IMAGES**: Refresh images/files on container restart.
+
+**CACHE_IMAGES**: Store downloaded images/files; one per release channel. Useful
+when switching between release channels for testing.
+
+**RELEASE**: Which release to download/use.
+
+**SRV_DIR**: Path for the folder to serve the tftpboot files from. 
+
 ## Radial
 
 [Radial][radial] is a [Docker][docker] container topology strategy that
