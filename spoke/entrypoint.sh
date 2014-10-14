@@ -77,6 +77,8 @@ if [ ! -e /tmp/pxe_first_run ]; then
 elif [ "$REFRESH_IMAGES" = "true" ]; then
     restart_message
     get_images
+else
+    restart_message
 fi
 
 select_image
