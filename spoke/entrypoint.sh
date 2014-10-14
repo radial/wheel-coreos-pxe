@@ -18,8 +18,12 @@ restart_message() {
 }
 
 get_signing_key() {
-    wget -P /tmp http://coreos.com/security/image-signing-key/CoreOS_Image_Signing_Key.pem
-    gpg --import /tmp/CoreOS_Image_Signing_Key.pem
+    if [ ! -e /data/cache/CoreOS_Image_Signing_Key.pem ]; then
+        wget -P /data/cache http://coreos.com/security/image-signing-key/CoreOS_Image_Signing_Key.pem
+        gpg --import /data/cache/CoreOS_Image_Signing_Key.pem
+    else
+        echo "Signing key already downloaded." | tee -a $ERR_LOG
+    fi
 }
 
 prep_dirs() {
