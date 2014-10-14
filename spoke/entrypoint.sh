@@ -63,7 +63,10 @@ if [ ! -e /tmp/pxe_first_run ]; then
 
     prep_dirs
     get_signing_key
+    get_images
 
+elif [ "$REFRESH_IMAGES" = "true" ]; then
+    restart_message
     if [[ "$CACHE_IMAGES" == "true" ]]; then
         if [[ ! -d "$CACHE_DIR" ]]; then
             get_images
@@ -73,12 +76,9 @@ if [ ! -e /tmp/pxe_first_run ]; then
     else
         get_images
     fi
-
-elif [ "$REFRESH_IMAGES" = "true" ]; then
-    restart_message
-    get_images
 else
     restart_message
+    echo "Using cached files for \"$RELEASE\" release." | tee -a $ERR_LOG
 fi
 
 select_image
