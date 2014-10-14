@@ -60,29 +60,33 @@ select_image() {
     ln -sf $CACHE_DIR/coreos_production_pxe_image.cpio.gz $SRV_DIR/coreos_production_pxe_image.cpio.gz
 }
 
-
-
-if [ ! -e /tmp/pxe_first_run ]; then
-    touch /tmp/pxe_first_run
-
-    prep_dirs
-    get_signing_key
-    get_images
-
-elif [ "$REFRESH_IMAGES" = "true" ]; then
-    restart_message
+cache_check() {
     if [[ "$CACHE_IMAGES" == "true" ]]; then
         if [[ ! -d "$CACHE_DIR" ]]; then
             get_images
         else
             echo "Using cached files for \"$RELEASE\" release." | tee -a $ERR_LOG
         fi
+    elif [ "$REFRESH_IMAGES" = "false" ]; then
+        echo "Using original files for \"$RELEASE\" release." | tee -a $ERR_LOG
     else
         get_images
     fi
+}
+
+if [ ! -e /tmp/pxe_first_run ]; then
+    touch /tmp/pxe_first_run
+
+    prep_dirs
+    get_signing_key
+    cache_check
+
+elif [ "$REFRESH_IMAGES" = "true" ]; then
+    restart_message
+    get_images
 else
     restart_message
-    echo "Using cached files for \"$RELEASE\" release." | tee -a $ERR_LOG
+    cache_check
 fi
 
 select_image
