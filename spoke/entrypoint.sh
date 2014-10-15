@@ -61,13 +61,13 @@ select_image() {
 }
 
 cache_check() {
-    if [[ "$CACHE_IMAGES" == "true" ]]; then
+    if [[ "$CACHE_IMAGES" == "True" ]]; then
         if [[ ! -d "$CACHE_DIR" ]]; then
             get_images
         else
             echo "Using cached files for \"$RELEASE\" release." | tee -a $ERR_LOG
         fi
-    elif [ "$REFRESH_IMAGES" = "false" ]; then
+    elif [ "$REFRESH_IMAGES" = "False" ]; then
         echo "Using original files for \"$RELEASE\" release." | tee -a $ERR_LOG
     else
         get_images
@@ -81,7 +81,7 @@ if [ ! -e /tmp/pxe_first_run ]; then
     get_signing_key
     cache_check
 
-elif [ "$REFRESH_IMAGES" = "true" ]; then
+elif [ "$REFRESH_IMAGES" = "True" ]; then
     restart_message
     get_images
 else
