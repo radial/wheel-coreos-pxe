@@ -70,6 +70,7 @@ cache_check() {
     elif [ "$REFRESH_IMAGES" = "False" ]; then
         echo "Using original files for \"$RELEASE\" release." | tee -a $ERR_LOG
     else
+        echo "Refresh files is set." | tee -a $ERR_LOG
         get_images
     fi
 }
@@ -83,6 +84,7 @@ if [ ! -e /tmp/pxe_first_run ]; then
 
 elif [ "$REFRESH_IMAGES" = "True" ]; then
     restart_message
+    echo "Refresh files is set." | tee -a $ERR_LOG
     get_images
 else
     restart_message
