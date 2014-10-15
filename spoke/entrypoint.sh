@@ -20,7 +20,6 @@ restart_message() {
 get_signing_key() {
     if [ ! -e /data/cache/CoreOS_Image_Signing_Key.pem ]; then
         wget -P /data/cache http://coreos.com/security/image-signing-key/CoreOS_Image_Signing_Key.pem
-        gpg --import /data/cache/CoreOS_Image_Signing_Key.pem
     else
         echo "Signing key already downloaded." | tee -a $ERR_LOG
     fi
@@ -44,6 +43,7 @@ get_images() {
     wget -nv http://${RELEASE}.release.core-os.net/amd64-usr/current/coreos_production_pxe_image.cpio.gz.sig 
     echo "...done" | tee -a $ERR_LOG
 
+    gpg --import /data/cache/CoreOS_Image_Signing_Key.pem
     if ! $(gpg --verify coreos_production_pxe.vmlinuz.sig && gpg --verify coreos_production_pxe_image.cpio.gz.sig); then
         echo "Image verification failed. Aborting container start." | tee -a $ERR_LOG
         exit 1
