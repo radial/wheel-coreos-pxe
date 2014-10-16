@@ -6,10 +6,6 @@ hub:
     build: hub
     volumes_from:
         - logs
-    volumes:
-        - /config
-        - /data
-        - /run
 pxe:
     build: spoke
     volumes_from:
