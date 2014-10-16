@@ -36,6 +36,8 @@ when switching between release channels for testing.
 
 **SRV_DIR**: Path for the folder to serve the tftpboot files from. 
 
+**CONF_FILE**: Path to dnsmasq.conf file.
+
 ## Radial
 
 [Radial][radial] is a [Docker][docker] container topology strategy that

@@ -6,6 +6,7 @@ REFRESH_IMAGES=${REFRESH_IMAGES:-"true"}
 CACHE_IMAGES=${CACHE_IMAGES:-"true"}
 RELEASE=${RELEASE:-stable}
 SRV_DIR=${SRV_DIR:-/data/tftpboot}
+CONF_FILE=${CONF_FILE:-/config/dnsmasq.conf}
 
 # Misc settings
 ERR_LOG=/log/$HOSTNAME/pxe_stderr.log
@@ -95,5 +96,5 @@ select_image
 apply_permissions
 echo Starting DHCP+TFTP server... | tee -a $ERR_LOG
 exec dnsmasq \
-    --conf-dir=/config \
+    --conf-file=$CONF_FILE \
     --no-daemon
