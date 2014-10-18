@@ -2,8 +2,8 @@
 set -e
 
 # Tunable settings
-REFRESH_IMAGES=${REFRESH_IMAGES:-"true"}
-CACHE_IMAGES=${CACHE_IMAGES:-"true"}
+REFRESH_IMAGES=${REFRESH_IMAGES:-"True"}
+CACHE_IMAGES=${CACHE_IMAGES:-"True"}
 RELEASE=${RELEASE:-stable}
 SRV_DIR=${SRV_DIR:-/data/tftpboot}
 CONF_FILE=${CONF_FILE:-/config/dnsmasq.conf}
