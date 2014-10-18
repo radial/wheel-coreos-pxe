@@ -38,6 +38,10 @@ when switching between release channels for testing.
 
 **CONF_FILE**: Path to dnsmasq.conf file.
 
+**DNS_CHECK**: Check for an active DNS service before attempting to download
+anything. Useful in preventing race conditions when this instance of dnsmasq is
+not configured to handle DNS, but another container/service/machine is.
+
 ## Radial
 
 [Radial][radial] is a [Docker][docker] container topology strategy that

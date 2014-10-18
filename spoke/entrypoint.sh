@@ -7,6 +7,7 @@ CACHE_IMAGES=${CACHE_IMAGES:-"True"}
 RELEASE=${RELEASE:-stable}
 SRV_DIR=${SRV_DIR:-/data/tftpboot}
 CONF_FILE=${CONF_FILE:-/config/dnsmasq.conf}
+DNS_CHECK=${DNS_CHECK:-"False"}
 
 # Misc settings
 ERR_LOG=/log/$HOSTNAME/pxe_stderr.log
@@ -75,6 +76,18 @@ cache_check() {
         get_images
     fi
 }
+
+dns_check() {
+    if [[ "$DNS_CHECK" == "True" ]]; then
+        echo "Waiting for DNS to come online..." | tee -a $ERR_LOG
+        while ! $(host ubuntu.com 2>&1 > /dev/null); do
+            sleep 1s
+        done
+        echo "...done" | tee -a $ERR_LOG
+    fi
+}
+
+dns_check
 
 if [ ! -e /tmp/pxe_first_run ]; then
     touch /tmp/pxe_first_run
