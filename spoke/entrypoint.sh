@@ -38,12 +38,12 @@ get_images() {
     rm -rf "$CACHE_DIR"
     mkdir -p "$CACHE_DIR"
     cd "$CACHE_DIR"
-    echo "Downloading \"$RELEASE\" channel pxe files..." | tee -a $ERR_LOG
+    echo -n "Downloading \"$RELEASE\" channel pxe files..." | tee -a $ERR_LOG
     wget -nv http://${RELEASE}.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz 
     wget -nv http://${RELEASE}.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz.sig
     wget -nv http://${RELEASE}.release.core-os.net/amd64-usr/current/coreos_production_pxe_image.cpio.gz 
     wget -nv http://${RELEASE}.release.core-os.net/amd64-usr/current/coreos_production_pxe_image.cpio.gz.sig 
-    echo "...done" | tee -a $ERR_LOG
+    echo "done" | tee -a $ERR_LOG
 
     gpg --import /data/cache/CoreOS_Image_Signing_Key.pem
     if ! $(gpg --verify coreos_production_pxe.vmlinuz.sig && gpg --verify coreos_production_pxe_image.cpio.gz.sig); then
@@ -79,11 +79,11 @@ cache_check() {
 
 dns_check() {
     if [[ "$DNS_CHECK" == "True" ]]; then
-        echo "Waiting for DNS to come online..." | tee -a $ERR_LOG
+        echo -n "Waiting for DNS to come online..." | tee -a $ERR_LOG
         while ! $(host ubuntu.com 2>&1 > /dev/null); do
             sleep 1s
         done
-        echo "...done" | tee -a $ERR_LOG
+        echo "done" | tee -a $ERR_LOG
     fi
 }
 
