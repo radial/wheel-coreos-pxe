@@ -10,8 +10,15 @@ This is a Radial Wheel repository for running dnsmasq as PXE+DHCP server serving
     one-size-fits-all. If you want to use cloud-config, you will need to modify
     this file heavily. Refer to the [CoreOS documentation][pxedocs] for that.
 * Configure dnsmasq configuration in "hub/config/dnsmasq.conf" to suit your network.
-    * Note: DHCP must be deactivated on your router and no other DHCP server can
-      be running.
+    * DHCP must be deactivated on your router and no other DHCP server can be
+      running.
+    * The template configuration here has dnsmasq setup as DNS, DHCP, tftp and
+      PXE server. At the bare minimum, this container should handle DHCP and
+      PXE. You could theoretically have DNS and tftp handled by other means (or
+      other containers), but thats left up to the user to optimize for their
+      network.
+    * Drop in additional configuration files into "hub/config/dnsmasq.d" for
+      lists of dns hosts or other configuration segmenting.
 
 A very important note: **in order for DHCP to work, this container must run
 using the `docker run --net host` option.** This option uses the hosts network
