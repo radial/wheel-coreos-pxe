@@ -13,12 +13,12 @@ This is a Radial Wheel repository for running dnsmasq as PXE+DHCP server serving
     * Note: DHCP must be deactivated on your router and no other DHCP server can
       be running.
 
-A very important note: **in order to work, this container is must run using
-the `docker run --net host` option.** This option uses the hosts network stack
-as the containers own. That means you must choose ports in your
-dnsmasq configuration that will not conflict with any ports already used on the
-host. The `--net host` option is not as secure as other options, so make sure to
-use appropriately. 
+A very important note: **in order for DHCP to work, this container must run
+using the `docker run --net host` option.** This option uses the hosts network
+stack as the containers own. That means you must choose ports in your dnsmasq
+configuration that will not conflict with any ports already used on the host.
+The `--net host` option is not as secure as other options, so make sure to use
+appropriately. 
 
 [coreos]: https://coreos.com/
 [pxedocs]: https://coreos.com/docs/running-coreos/bare-metal/booting-with-pxe/
