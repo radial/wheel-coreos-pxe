@@ -16,6 +16,4 @@ pxe:
     image: "radial/coreos-pxe:latest"
     volumes_from:
         - hub
-    ports:
-        - "5353:5353"
     net: "host"
