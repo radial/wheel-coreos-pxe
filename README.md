@@ -4,12 +4,13 @@ This is a Radial Wheel repository for running dnsmasq as PXE+DHCP server serving
 [Coreos][coreos] images.
 
 ## Setup
-* Add your public ssh-key to the file "hub/config/pxelinux.cfg/default"
-  where it says `YOUR_SSH_PUBLIC_KEY_HERE`
+* Add your public ssh-key to the file "hub/config/pxelinux.cfg/default" where it
+  says `YOUR_SSH_PUBLIC_KEY_HERE`
   * Also make sure to modify any of the other parameters as needed. They aren't
     one-size-fits-all. If you want to use cloud-config, you will need to modify
     this file heavily. Refer to the [CoreOS documentation][pxedocs] for that.
-* Configure dnsmasq configuration in "hub/config/dnsmasq.conf" to suit your network.
+* Configure dnsmasq configuration in "hub/config/dnsmasq.conf" to suit your
+  network.
     * DHCP must be deactivated on your router and no other DHCP server can be
       running.
     * The template configuration here has dnsmasq setup as DNS, DHCP, tftp and
@@ -19,6 +20,11 @@ This is a Radial Wheel repository for running dnsmasq as PXE+DHCP server serving
       network.
     * Drop in additional configuration files into "hub/config/dnsmasq.d" for
       lists of dns hosts or other configuration segmenting.
+* If you have additional files/folders to bake into the coreos image (typically,
+  a pre-loaded cloud-config.yml in `/usr/share/oem` for example), you can create
+  a tarball (with the root of the tarball the same as '/'), upload it into the
+  hub and specify it's location with `$AMMEND_IMAGE`. The entrypoint script will
+  automatically amend it before serving it out.
 
 A very important note: **in order for DHCP to work, this container must run
 using the `docker run --net host` option.** This option uses the hosts network
@@ -44,6 +50,8 @@ Tunable environment variables; modify at runtime. Italics are defaults.
     download anything. Useful in preventing race conditions when this instance
     of dnsmasq is not configured to handle DNS, but another
     container/service/machine is.
+- **$AMMEND_IMAGE**: [_nothing_] Location of compressed or uncompressed tarball
+  to merge with the coreos image before serving it via PXE.
 
 ## Radial
 

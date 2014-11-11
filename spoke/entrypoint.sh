@@ -8,6 +8,7 @@ RELEASE=${RELEASE:-stable}
 SRV_DIR=${SRV_DIR:-/data/tftpboot}
 CONF_FILE=${CONF_FILE:-/config/dnsmasq.conf}
 DNS_CHECK=${DNS_CHECK:-"False"}
+AMMEND_IMAGE=${AMMEND_IMAGE:-''}
 
 # Misc settings
 ERR_LOG=/log/$HOSTNAME/pxe_stderr.log
@@ -66,6 +67,7 @@ cache_check() {
     if [[ "$CACHE_IMAGES" == "True" ]]; then
         if [[ ! -d "$CACHE_DIR" ]]; then
             get_images
+            ammend_image
         else
             echo "Using cached files for \"$RELEASE\" release." | tee -a $ERR_LOG
         fi
@@ -74,6 +76,7 @@ cache_check() {
     else
         echo "Refresh files is set." | tee -a $ERR_LOG
         get_images
+        ammend_image
     fi
 }
 
@@ -87,19 +90,52 @@ dns_check() {
     fi
 }
 
+ammend_image() {
+    ex() {
+        if [[ -f $1 ]]; then
+            case $1 in
+                *.tar.bz2) tar -C $2 -xvjf $1;;
+                *.tar.gz) tar -C $2 -xvzf $1;;
+                *.tar.xz) tar -C $2 -xvJf $1;;
+                *.tar.lzma) tar --lzma xvf $1;;
+                *.tar) tar -C $2 -xvf $1;;
+                *.tbz2) tar -C $2 -xvjf $1;;
+                *.tgz) tar -C $2 -xvzf $1;;
+                *) echo "'$1' cannot be extracted via >ex<";;
+            esac
+        else
+            echo "'$1' is not a valid file"
+        fi
+    }
+
+    merge() {
+        echo "Ammending $RELEASE image..." | tee -a $ERR_LOG
+        mkdir -p /tmp/ammend
+        cd /tmp/ammend
+        ex "$AMMEND_IMAGE" /tmp/ammend
+        gzip -d $CACHE_DIR/coreos_production_pxe_image.cpio.gz
+        find . | cpio -o -A -H newc -O $CACHE_DIR/coreos_production_pxe_image.cpio
+        gzip $CACHE_DIR/coreos_production_pxe_image.cpio
+        rm -rf /tmp/ammend
+    }
+
+    if [ ! "$AMMEND_IMAGE" = '' ]; then
+        merge
+    fi
+}
+
 dns_check
 
 if [ ! -e /tmp/pxe_first_run ]; then
     touch /tmp/pxe_first_run
-
     prep_dirs
     get_signing_key
     cache_check
-
 elif [ "$REFRESH_IMAGES" = "True" ]; then
     restart_message
     echo "Refresh files is set." | tee -a $ERR_LOG
     get_images
+    ammend_image
 else
     restart_message
     cache_check
