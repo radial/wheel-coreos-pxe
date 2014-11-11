@@ -32,22 +32,18 @@ appropriately.
 
 ## Tunables
 
-Tunable environment variables; modify at runtime.
+Tunable environment variables; modify at runtime. Italics are defaults.
 
-**REFRESH_IMAGES**: Refresh images/files on container restart.
-
-**CACHE_IMAGES**: Store downloaded images/files; one per release channel. Useful
-when switching between release channels for testing.
-
-**RELEASE**: Which release to download/use.
-
-**SRV_DIR**: Path for the folder to serve the tftpboot files from. 
-
-**CONF_FILE**: Path to dnsmasq.conf file.
-
-**DNS_CHECK**: Check for an active DNS service before attempting to download
-anything. Useful in preventing race conditions when this instance of dnsmasq is
-not configured to handle DNS, but another container/service/machine is.
+- **$REFRESH_IMAGES**: [_True_|False] Refresh images/files on container restart.
+- **$CACHE_IMAGES**: [_True_|False] Store downloaded images/files; one per release channel.
+    Useful when switching between release channels for testing.
+- **$RELEASE**: [_"stable"_|"beta"|"alpha"] Which release to download/use.
+- **$SRV_DIR**: [_"/data/tftpboot"_] Path for the folder to serve the tftpboot files from. 
+- **$CONF_FILE**: [_"/config/dnsmasq.conf"_] Path to dnsmasq.conf file.
+- **$DNS_CHECK**: [True|_False_] Check for an active DNS service before attempting to
+    download anything. Useful in preventing race conditions when this instance
+    of dnsmasq is not configured to handle DNS, but another
+    container/service/machine is.
 
 ## Radial
 
