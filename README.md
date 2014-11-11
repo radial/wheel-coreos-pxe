@@ -23,7 +23,7 @@ This is a Radial Wheel repository for running dnsmasq as PXE+DHCP server serving
 * If you have additional files/folders to bake into the coreos image (typically,
   a pre-loaded cloud-config.yml in `/usr/share/oem` for example), you can create
   a tarball (with the root of the tarball the same as '/'), upload it into the
-  hub and specify it's location with `$AMMEND_IMAGE`. The entrypoint script will
+  hub and specify it's location with `$AMEND_IMAGE`. The entrypoint script will
   automatically amend it before serving it out.
 
 A very important note: **in order for DHCP to work, this container must run
@@ -50,7 +50,7 @@ Tunable environment variables; modify at runtime. Italics are defaults.
     download anything. Useful in preventing race conditions when this instance
     of dnsmasq is not configured to handle DNS, but another
     container/service/machine is.
-- **$AMMEND_IMAGE**: [_nothing_] Location of compressed or uncompressed tarball
+- **$AMEND_IMAGE**: [_nothing_] Location of compressed or uncompressed tarball
   to merge with the coreos image before serving it via PXE.
 
 ## Radial

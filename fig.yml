@@ -12,4 +12,4 @@ pxe:
         - hub
     net: "host"
     environment:
-      AMMEND_IMAGE: /data/oem.tar
+      AMEND_IMAGE: /data/oem.tar

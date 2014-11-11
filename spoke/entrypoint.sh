@@ -8,7 +8,7 @@ RELEASE=${RELEASE:-stable}
 SRV_DIR=${SRV_DIR:-/data/tftpboot}
 CONF_FILE=${CONF_FILE:-/config/dnsmasq.conf}
 DNS_CHECK=${DNS_CHECK:-"False"}
-AMMEND_IMAGE=${AMMEND_IMAGE:-''}
+AMEND_IMAGE=${AMEND_IMAGE:-''}
 
 # Misc settings
 ERR_LOG=/log/$HOSTNAME/pxe_stderr.log
@@ -67,7 +67,7 @@ cache_check() {
     if [[ "$CACHE_IMAGES" == "True" ]]; then
         if [[ ! -d "$CACHE_DIR" ]]; then
             get_images
-            ammend_image
+            amend_image
         else
             echo "Using cached files for \"$RELEASE\" release." | tee -a $ERR_LOG
         fi
@@ -76,7 +76,7 @@ cache_check() {
     else
         echo "Refresh files is set." | tee -a $ERR_LOG
         get_images
-        ammend_image
+        amend_image
     fi
 }
 
@@ -90,7 +90,7 @@ dns_check() {
     fi
 }
 
-ammend_image() {
+amend_image() {
     ex() {
         if [[ -f $1 ]]; then
             case $1 in
@@ -109,17 +109,17 @@ ammend_image() {
     }
 
     merge() {
-        echo "Ammending $RELEASE image..." | tee -a $ERR_LOG
-        mkdir -p /tmp/ammend
-        cd /tmp/ammend
-        ex "$AMMEND_IMAGE" /tmp/ammend
+        echo "Amending $RELEASE image..." | tee -a $ERR_LOG
+        mkdir -p /tmp/amend
+        cd /tmp/amend
+        ex "$AMEND_IMAGE" /tmp/amend
         gzip -d $CACHE_DIR/coreos_production_pxe_image.cpio.gz
         find . | cpio -o -A -H newc -O $CACHE_DIR/coreos_production_pxe_image.cpio
         gzip $CACHE_DIR/coreos_production_pxe_image.cpio
-        rm -rf /tmp/ammend
+        rm -rf /tmp/amend
     }
 
-    if [ ! "$AMMEND_IMAGE" = '' ]; then
+    if [ ! "$AMEND_IMAGE" = '' ]; then
         merge
     fi
 }
@@ -135,7 +135,7 @@ elif [ "$REFRESH_IMAGES" = "True" ]; then
     restart_message
     echo "Refresh files is set." | tee -a $ERR_LOG
     get_images
-    ammend_image
+    amend_image
 else
     restart_message
     cache_check
