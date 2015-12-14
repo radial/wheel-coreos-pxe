@@ -1,7 +1,7 @@
 ## Dockerfile-coreos-pxe
 
 This is a Radial Wheel repository for running dnsmasq as PXE+DHCP server serving
-[Coreos][coreos] images.
+[CoreOS][coreos] images.
 
 ## Setup
 * Add your public ssh-key to the file "hub/config/pxelinux.cfg/default" where it
